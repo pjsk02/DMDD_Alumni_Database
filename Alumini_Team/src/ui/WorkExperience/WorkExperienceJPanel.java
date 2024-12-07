@@ -7,6 +7,7 @@ package ui.WorkExperience;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import javax.swing.JPanel;
 
 /**
  *
@@ -17,8 +18,14 @@ public class WorkExperienceJPanel extends javax.swing.JPanel {
     /**
      * Creates new form WorkExperienceJPanel
      */
-    public WorkExperienceJPanel() {
+    private JPanel userProcessContainer;
+    private String x;
+    public WorkExperienceJPanel(JPanel usp, String sid) {
         initComponents();
+        this.x = sid;
+        this.userProcessContainer = usp;
+        lblStudID.setText(x);
+        
     }
 
     /**
@@ -47,7 +54,11 @@ public class WorkExperienceJPanel extends javax.swing.JPanel {
         lblSkill = new javax.swing.JLabel();
         txtPlaceOfWork = new javax.swing.JTextField();
         title = new javax.swing.JLabel();
+        title1 = new javax.swing.JLabel();
+        lblStudID = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
 
         jInternalFrame1.setVisible(true);
         jInternalFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -124,7 +135,14 @@ public class WorkExperienceJPanel extends javax.swing.JPanel {
 
         title.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         title.setText("Work Experience");
-        jInternalFrame1.getContentPane().add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
+        jInternalFrame1.getContentPane().add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
+        title1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        title1.setText("Student:");
+        jInternalFrame1.getContentPane().add(title1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 70, -1));
+
+        lblStudID.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jInternalFrame1.getContentPane().add(lblStudID, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 90, 10));
 
         jScrollPane1.setViewportView(jInternalFrame1);
 
@@ -134,6 +152,12 @@ public class WorkExperienceJPanel extends javax.swing.JPanel {
                 btnSaveActionPerformed(evt);
             }
         });
+
+        jLabel10.setText("Application Progress Bar");
+
+        progressBar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        progressBar.setBorderPainted(false);
+        progressBar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -148,11 +172,21 @@ public class WorkExperienceJPanel extends javax.swing.JPanel {
                         .addGap(305, 305, 305)
                         .addComponent(btnSave)))
                 .addContainerGap(237, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSave)
@@ -176,35 +210,36 @@ public class WorkExperienceJPanel extends javax.swing.JPanel {
         
             
             
-            String sql = "INSERT INTO Work_Exp(workid,company,title,start_date,end_date,work_place)" +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
-            String sql2 = "INSERT INTO skill(sid,skill) " + 
+            String sql = "INSERT INTO WorkExperience(StudentID,company,title,StartDate,EndDate,PlaceOfWork)" +
+                     "VALUES (?,?, ?, ?, ?, ?)";
+            String sql2 = "INSERT INTO skill(StudentID,SkillName) " + 
                     "VALUES (?,?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         PreparedStatement pstmt2 = conn.prepareStatement(sql2);
         
-        pstmt.setString(1, wid);        
+        pstmt.setString(1, x);        
         pstmt.setString(2, cname);
         pstmt.setString(3, title);
         pstmt.setString(4, strt_date);
         pstmt.setString(5, end_date);
         pstmt.setString(6, work_place);   
         
-        pstmt2.setString(1, sid);
+        pstmt2.setString(1, x);
         pstmt2.setString(2, skill);
         
         int rowsInserted = pstmt.executeUpdate();
         int rowsInserted2 = pstmt2.executeUpdate();
         if (rowsInserted > 0) {
             System.out.println("Work Profile is inserted successfully for the student");
-        }
+            }
         if (rowsInserted > 0) {
             System.out.println("Skill is inserted successfully for the student");
-        }
+            }
         }
         catch(Exception e){
         System.out.println(e.getMessage());            
         }
+        progressBar.setValue(75);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtSkillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSkillMouseClicked
@@ -241,15 +276,19 @@ public class WorkExperienceJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCompany;
     private javax.swing.JLabel lblEndDate1;
     private javax.swing.JLabel lblPlaceOfWork1;
     private javax.swing.JLabel lblSkill;
     private javax.swing.JLabel lblStartDate1;
+    private javax.swing.JLabel lblStudID;
     private javax.swing.JLabel lblTitle1;
     private javax.swing.JLabel lblWorkId1;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JLabel title;
+    private javax.swing.JLabel title1;
     private javax.swing.JTextField txtCompany;
     private javax.swing.JTextField txtEndDate;
     private javax.swing.JTextField txtPlaceOfWork;

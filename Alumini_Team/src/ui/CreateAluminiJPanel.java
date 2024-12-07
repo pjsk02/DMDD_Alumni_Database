@@ -4,6 +4,7 @@
  */
 package ui;
 
+import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.*;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import ui.Education.EducationJPanel;
 
 /**
  *
@@ -22,10 +24,13 @@ public class CreateAluminiJPanel extends javax.swing.JPanel {
      * Creates new form CreateAluminiJPanel
      */
     private JPanel userProcessContainer;
-    
+    String sidd;
     public CreateAluminiJPanel(JPanel upc) {
         initComponents();
         this.userProcessContainer = upc;
+        jInternalFrame1.setVisible(false);
+        btnSave.setVisible(false);
+        btnSave1.setVisible(false);
     }
 
     /**
@@ -37,7 +42,7 @@ public class CreateAluminiJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCreate = new javax.swing.JButton();
+        btnStudentAddPane = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -59,17 +64,33 @@ public class CreateAluminiJPanel extends javax.swing.JPanel {
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txtCountry = new javax.swing.JTextField();
+        txtAddL1 = new javax.swing.JTextField();
+        txtAddL2 = new javax.swing.JTextField();
+        txtCity = new javax.swing.JTextField();
+        txtState = new javax.swing.JTextField();
+        txtPostalCole = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
+        btnSave1 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCreate.setText("Click here to Continue to enter Address");
-        btnCreate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+        btnStudentAddPane.setText("Click here to Continue to enter Address");
+        btnStudentAddPane.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnStudentAddPane.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateActionPerformed(evt);
+                btnStudentAddPaneActionPerformed(evt);
             }
         });
-        add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, -1));
+        add(btnStudentAddPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -142,6 +163,11 @@ public class CreateAluminiJPanel extends javax.swing.JPanel {
         jInternalFrame2.getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 170, -1));
 
         txtDob.setText("YYYY-MM-DD");
+        txtDob.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtDobMouseClicked(evt);
+            }
+        });
         jInternalFrame2.getContentPane().add(txtDob, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 110, -1));
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -179,49 +205,122 @@ public class CreateAluminiJPanel extends javax.swing.JPanel {
 
         jLabel10.setText("Application Progress Bar");
         add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, -1));
+
+        jInternalFrame1.setVisible(true);
+        jInternalFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel13.setText("Student Address Pane");
+        jInternalFrame1.getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
+
+        jLabel14.setText("Country");
+        jInternalFrame1.getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 50, 20));
+
+        jLabel15.setText("Address Line 1");
+        jInternalFrame1.getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        jLabel16.setText("Address Line 2");
+        jInternalFrame1.getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+
+        jLabel17.setText("State");
+        jInternalFrame1.getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
+
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel18.setText("City");
+        jInternalFrame1.getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 30, -1));
+
+        jLabel19.setText("Postal Code");
+        jInternalFrame1.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 70, 20));
+
+        txtCountry.setText("Enter Country");
+        txtCountry.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCountryMouseClicked(evt);
+            }
+        });
+        jInternalFrame1.getContentPane().add(txtCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 170, -1));
+
+        txtAddL1.setText("Apt No, Street Name");
+        txtAddL1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtAddL1MouseClicked(evt);
+            }
+        });
+        txtAddL1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAddL1ActionPerformed(evt);
+            }
+        });
+        jInternalFrame1.getContentPane().add(txtAddL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 170, -1));
+
+        txtAddL2.setText("Area Name");
+        txtAddL2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtAddL2MouseClicked(evt);
+            }
+        });
+        jInternalFrame1.getContentPane().add(txtAddL2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 170, -1));
+
+        txtCity.setText("City");
+        txtCity.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCityMouseClicked(evt);
+            }
+        });
+        jInternalFrame1.getContentPane().add(txtCity, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 170, -1));
+
+        txtState.setText("State (Eg. MA, NY, ...)");
+        txtState.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtStateMouseClicked(evt);
+            }
+        });
+        txtState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStateActionPerformed(evt);
+            }
+        });
+        jInternalFrame1.getContentPane().add(txtState, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 170, -1));
+
+        txtPostalCole.setText("(Eg. 02020, ....)");
+        txtPostalCole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPostalColeMouseClicked(evt);
+            }
+        });
+        jInternalFrame1.getContentPane().add(txtPostalCole, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 170, -1));
+
+        add(jInternalFrame1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, 370, 400));
+
+        btnSave.setText("Click here to Save Details");
+        btnSave.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 490, 180, 30));
+
+        btnSave1.setText("Click here to go to Education Section");
+        btnSave1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave1ActionPerformed(evt);
+            }
+        });
+        add(btnSave1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 540, 230, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtStudIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtStudIDActionPerformed
 
-    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+    private void btnStudentAddPaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentAddPaneActionPerformed
         // TODO add your handling code here:
-        
-        String sname= txtStudName.getText();
-        String sid= txtStudID.getText();
-        String contact = txtContactnum.getText();
-        String email = txtEmail.getText();
-        String gender = (String) genderCB.getSelectedItem();
-        String dob = txtDob.getText();
-        
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Admin_Database?zeroDateTimeBehavior=CONVERT_TO_NULL","root","password");
-        
-            
-            
-            String sql = "INSERT INTO Student(sid,sname,contact,semail,sgender,sdob,snationality)" +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        
-        pstmt.setString(1, sid);        
-        pstmt.setString(2, sname);
-        pstmt.setString(3, contact);
-        pstmt.setString(4, email);
-        pstmt.setString(5, gender);
-        pstmt.setString(6, dob);       
-        
-        int rowsInserted = pstmt.executeUpdate();
-        if (rowsInserted > 0) {
-            System.out.println("A new student was inserted successfully!");
-        }
-        }
-        catch(Exception e){
-        System.out.println(e.getMessage());         
-        progressBar.setValue(10);
-        }
-    }//GEN-LAST:event_btnCreateActionPerformed
+//        btnSave.setVisible(true);
+        jInternalFrame1.setVisible(true);
+        progressBar.setValue(25);
+    }//GEN-LAST:event_btnStudentAddPaneActionPerformed
 
     private void txtStudIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtStudIDMouseClicked
         // TODO add your handling code here:
@@ -252,15 +351,138 @@ public class CreateAluminiJPanel extends javax.swing.JPanel {
         jPasswordField1.setText("");
     }//GEN-LAST:event_jPasswordField1MouseClicked
 
+    private void txtDobMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDobMouseClicked
+        // TODO add your handling code here:
+        txtDob.setText("");
+    }//GEN-LAST:event_txtDobMouseClicked
+
+    private void txtAddL1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddL1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAddL1ActionPerformed
+
+    private void txtStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStateActionPerformed
+
+    private void txtAddL1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddL1MouseClicked
+        // TODO add your handling code here:
+        txtAddL1.setText("");
+    }//GEN-LAST:event_txtAddL1MouseClicked
+
+    private void txtAddL2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddL2MouseClicked
+        // TODO add your handling code here:
+        txtAddL2.setText("");
+    }//GEN-LAST:event_txtAddL2MouseClicked
+
+    private void txtCityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCityMouseClicked
+        // TODO add your handling code here:
+        txtCity.setText("");
+    }//GEN-LAST:event_txtCityMouseClicked
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        
+        String sname= txtStudName.getText();
+        String sid= txtStudID.getText();
+        sidd = sid;
+        String contact = txtContactnum.getText();
+        String email = txtEmail.getText();
+        String gender = (String) genderCB.getSelectedItem();
+        String dob = txtDob.getText();
+        String addl1 = txtAddL1.getText();
+        String addl2 = txtAddL2.getText();
+        String city = txtCity.getText();
+        String state = txtState.getText();
+        String pincode = txtPostalCole.getText();
+        String country = txtCountry.getText();
+
+        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Admin_Database?zeroDateTimeBehavior=CONVERT_TO_NULL","root","password");
+        
+            
+            
+            String sql = "INSERT INTO Student(sid,sname,contact,semail,sgender,sdob)" +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+                        
+                    String sql2 = "INSERT INTO StudentAdd (sid, Add1, Add2, city, state, Postal_Code, country)" +
+             "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+        
+        pstmt.setString(1, sid);        
+        pstmt.setString(2, sname);
+        pstmt.setString(3, contact);
+        pstmt.setString(4, email);
+        pstmt.setString(5, gender);
+        pstmt.setString(6, dob);  
+        
+        pstmt2.setString(1, sid);        
+        pstmt2.setString(2, addl1);
+        pstmt2.setString(3, addl2);
+        pstmt2.setString(4, city);
+        pstmt2.setString(5, state);
+        pstmt2.setString(6, pincode); 
+        pstmt2.setString(7, country); 
+        
+        int rowsInserted = pstmt.executeUpdate();
+        int rowsInserted2 = pstmt2.executeUpdate();
+
+        if (rowsInserted > 0) {
+            System.out.println("A new student was inserted successfully!");
+        }
+        }
+        catch(Exception e){
+        System.out.println(e.getMessage());         
+        }
+        progressBar.setValue(50);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
+        // TODO add your handling code here:
+        EducationJPanel awajp = new EducationJPanel(userProcessContainer,sidd);
+        userProcessContainer.add("EducationJPanel",awajp);
+        CardLayout layout = (CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnSave1ActionPerformed
+
+    private void txtStateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtStateMouseClicked
+        // TODO add your handling code here:
+        txtState.setText("");
+    }//GEN-LAST:event_txtStateMouseClicked
+
+    private void txtPostalColeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPostalColeMouseClicked
+        // TODO add your handling code here:
+        txtPostalCole.setText("");
+    }//GEN-LAST:event_txtPostalColeMouseClicked
+
+    private void txtCountryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCountryMouseClicked
+        // TODO add your handling code here:
+        txtCountry.setText("");
+        btnSave.setVisible(true);
+        btnSave1.setVisible(true);
+    }//GEN-LAST:event_txtCountryMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSave1;
+    private javax.swing.JButton btnStudentAddPane;
     private javax.swing.JComboBox<String> genderCB;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JInternalFrame jInternalFrame2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -271,9 +493,15 @@ public class CreateAluminiJPanel extends javax.swing.JPanel {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JTextField txtAddL1;
+    private javax.swing.JTextField txtAddL2;
+    private javax.swing.JTextField txtCity;
     private javax.swing.JTextField txtContactnum;
+    private javax.swing.JTextField txtCountry;
     private javax.swing.JTextField txtDob;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtPostalCole;
+    private javax.swing.JTextField txtState;
     private javax.swing.JTextField txtStudID;
     private javax.swing.JTextField txtStudName;
     // End of variables declaration//GEN-END:variables
