@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ui.WorkExperience;
+package ui.table;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -40,15 +40,20 @@ public class WorkTableJPanel extends javax.swing.JPanel {
 
         tblWorkExperience.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Work ID", "Student ID", "Company", "Title", "Start Date", "End Date", "Place of work"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblWorkExperience);
 
         btnPopulate.setText("Populate Data");
@@ -72,24 +77,24 @@ public class WorkTableJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(340, 340, 340)
                         .addComponent(btnPopulate))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(358, 358, 358)
-                        .addComponent(btnDelete)))
-                .addContainerGap(110, Short.MAX_VALUE))
+                        .addComponent(btnDelete))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(btnPopulate)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(btnDelete)
                 .addContainerGap(128, Short.MAX_VALUE))
         );
@@ -120,15 +125,16 @@ public class WorkTableJPanel extends javax.swing.JPanel {
         // Loop through the result set
         while (rs.next()) {
             // Retrieve data from each column (modify column names as per your WorkExperience table)
+            String wid = String.valueOf(rs.getInt("WorkID"));
             String studentID = String.valueOf(rs.getInt("StudentID"));
-            String companyName = rs.getString("CompanyName");
+            String companyName = rs.getString("Company");
             String jobTitle = rs.getString("Title");
             String startDate = rs.getString("StartDate");
             String endDate = rs.getString("EndDate"); // May be null
             String placeofwork = rs.getString("Placeofwork");
 
             // Create a row of data
-            String tbData[] = {studentID, companyName, jobTitle, startDate, endDate, placeofwork};
+            String tbData[] = {wid, studentID, companyName, jobTitle, startDate, endDate, placeofwork};
 
             // Get the table model and add the row
             DefaultTableModel tblModel = (DefaultTableModel) tblWorkExperience.getModel();

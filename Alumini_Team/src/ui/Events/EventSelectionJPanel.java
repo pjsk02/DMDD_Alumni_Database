@@ -284,10 +284,9 @@ public class EventSelectionJPanel extends javax.swing.JPanel {
                 String eventID = rsAllEvents.getString("EventID");
                 String eventName = rsAllEvents.getString("EventName");
                 String eventDate = rsAllEvents.getString("EventDate");
-                String eventLocation = rsAllEvents.getString("EventLocation");
-                String eventDescription = rsAllEvents.getString("EventDescription");
+                String eventLocation = rsAllEvents.getString("Location");
 
-                modelAllEvents.addRow(new Object[]{eventID, eventName, eventDate, eventLocation, eventDescription});
+                modelAllEvents.addRow(new Object[]{eventID, eventName, eventDate, eventLocation});
             }
 
             // Close result set and prepared statement for all events
@@ -295,7 +294,7 @@ public class EventSelectionJPanel extends javax.swing.JPanel {
             pstmtAllEvents.close();
 
             // Query to fetch events registered by a specific student
-            String sqlRegisteredEvents = "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, e.EventDescription " +
+            String sqlRegisteredEvents = "SELECT e.EventID, e.EventName, e.EventDate, e.Location " +
                                          "FROM Events e " +
                                          "INNER JOIN EventParticipants ep ON e.EventID = ep.EventID " +
                                          "WHERE ep.StudentID = ?";
@@ -318,10 +317,9 @@ public class EventSelectionJPanel extends javax.swing.JPanel {
                 String eventID = rsRegisteredEvents.getString("EventID");
                 String eventName = rsRegisteredEvents.getString("EventName");
                 String eventDate = rsRegisteredEvents.getString("EventDate");
-                String eventLocation = rsRegisteredEvents.getString("EventLocation");
-                String eventDescription = rsRegisteredEvents.getString("EventDescription");
+                String eventLocation = rsRegisteredEvents.getString("Location");
 
-                modelRegList.addRow(new Object[]{eventID, eventName, eventDate, eventLocation, eventDescription});
+                modelRegList.addRow(new Object[]{eventID, eventName, eventDate, eventLocation});
             }
 
             // Close result set, prepared statement, and connection for registered events
